@@ -22,7 +22,7 @@ int rightMotorSpeed = 5;  //D5 = OC0B:PWM <--> analogWrite
 int leftMotorSpeed = 6; //D6 = OC0A:PWM <--> analogWrite
 int leftMotorDir = 7; //D7 <--> digitalWrite
 
-unsigned int motorSpeed = 150;  //PWM value in range [0, 255], where 0 = 0% and 255 = 100% duty cycle
+unsigned int motorSpeed = 200;  //PWM value in range [0, 255], where 0 = 0% and 255 = 100% duty cycle
 
 void setup() {
   //declare board inputs and outputs (I/O)
