@@ -1,7 +1,7 @@
 #include <MeMCore.h>
 
 MeLineFollower linefollower(2); //IR line follow sensor connected to port 2
-MeDCMotor motorLeft9(M1);
+MeDCMotor motorLeft(M1);
 MeDCMotor motorRight(M2);
 
 int rightMotorDir = 4;  //D4 <--> digitalWrite
