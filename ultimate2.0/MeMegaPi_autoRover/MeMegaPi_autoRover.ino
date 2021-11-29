@@ -20,16 +20,17 @@
 #include <MeMegaPi.h>
 
 MeUltrasonicSensor ultrasonic(7); //ultra sonic sensor connected to RJ25 port 8
-float disFront;
-float disRight;
-float disLeft;
+float distFront;
+float distRight;
+float distLeft;
 
 Servo meServo; //create servo object to control a servo with the functions provided by the library
 int servoDelay = 400;
 
 MeMegaPiDCMotor motorR(PORT1B); //right motor
 MeMegaPiDCMotor motorL(PORT2B); //left motor
-int motorSpeed = 255;
+int motorSpeed = 255; //PWM value 0 - 255 (0 - 100% motor speed)
+int turnDelay = 850;  //millisecond delay to turn rover 90 degrees
 
 void setup(){
   Serial.begin(9600);
@@ -38,24 +39,47 @@ void setup(){
 }
 
 void loop(){
-  disFront = ultrasonic.distanceCm();
+  distFront = ultrasonic.distanceCm();
 
-  if (disFront < 10){
+  if (distFront < 10){
     evalRight();
     evalLeft();
     servoFront();
+    if (distRight > distLeft){
+      turnRight();
+    }
+    else if (distLeft > distRight){
+      turnLeft();
+    }
   }
+  
   Serial.print("Front: ");
-  Serial.print(disFront);
+  Serial.print(distFront);
   Serial.print("Right: ");
-  Serial.print(disRight);
+  Serial.print(distRight);
   Serial.print("Left: ");
-  Serial.println(disLeft);
+  Serial.println(distLeft);
 }
 
 void forward(){
   motorR.run(-motorSpeed);
   motorL.run(motorSpeed);
+}
+
+void turnRight(){
+  motorR.run(motorSpeed);
+  motorL.run(motorSpeed);
+  delay(turnDelay);
+  motorR.stop();
+  motorL.stop();
+}
+
+void turnLeft(){
+  motorR.run(-motorSpeed);
+  motorL.run(-motorSpeed);
+  delay(turnDelay);
+  motorR.stop();
+  motorL.stop();
 }
 
 void roverStop(){
@@ -71,13 +95,13 @@ void servoFront(){
 void evalRight(){
    meServo.write(0);
    delay(servoDelay);
-   disRight = ultrasonic.distanceCm();
+   distRight = ultrasonic.distanceCm();
    delay(servoDelay);
 }
 
 void evalLeft(){
   meServo.write(180);
   delay(servoDelay);
-  disLeft = ultrasonic.distanceCm();
+  distLeft = ultrasonic.distanceCm();
   delay(servoDelay);
 }
