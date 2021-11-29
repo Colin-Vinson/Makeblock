@@ -27,14 +27,14 @@ float disLeft;
 Servo meServo; //create servo object to control a servo with the functions provided by the library
 int servoDelay = 400;
 
-MeMegaPiDCMotor motor1(PORT1B);
-MeMegaPiDCMotor motor2(PORT2B);
+MeMegaPiDCMotor motorR(PORT1B); //right motor
+MeMegaPiDCMotor motorL(PORT2B); //left motor
+int motorSpeed = 255;
 
 void setup(){
   Serial.begin(9600);
 
   meServo.attach(63); //port 6 slot 2 (A9 = D63 on Arduino Mega)
-  
 }
 
 void loop(){
@@ -51,6 +51,16 @@ void loop(){
   Serial.print(disRight);
   Serial.print("Left: ");
   Serial.println(disLeft);
+}
+
+void forward(){
+  motorR.run(-motorSpeed);
+  motorL.run(motorSpeed);
+}
+
+void roverStop(){
+  motorR.stop();
+  motorL.stop();
 }
 
 void servoFront(){
