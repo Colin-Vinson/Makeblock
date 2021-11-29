@@ -42,6 +42,7 @@ void loop(){
   distFront = ultrasonic.distanceCm();
 
   if (distFront < 10){
+    roverStop();
     evalRight();
     evalLeft();
     servoFront();
@@ -52,7 +53,9 @@ void loop(){
       turnLeft();
     }
   }
-  
+  else{
+    forward();
+  }
   Serial.print("Front: ");
   Serial.print(distFront);
   Serial.print("Right: ");
