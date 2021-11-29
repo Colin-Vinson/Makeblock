@@ -24,6 +24,9 @@ float distFront;
 float distRight;
 float distLeft;
 
+MeLineFollower irSensor(PORT_5);
+int irSensorState;
+
 Servo meServo; //create servo object to control a servo with the functions provided by the library
 int servoDelay = 400;
 
@@ -40,6 +43,7 @@ void setup(){
 
 void loop(){
   distFront = ultrasonic.distanceCm();
+  irSensorState = irSensor.readSensors();
 
   if (distFront < 10){
     roverStop();
@@ -61,7 +65,9 @@ void loop(){
   Serial.print("Right: ");
   Serial.print(distRight);
   Serial.print("Left: ");
-  Serial.println(distLeft);
+  Serial.print(distLeft);
+  Serial.print("IR-sensor: ");
+  Serial.println(irSensorState);
 }
 
 void forward(){
