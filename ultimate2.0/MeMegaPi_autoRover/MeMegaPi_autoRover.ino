@@ -45,21 +45,27 @@ void loop(){
   distFront = ultrasonic.distanceCm();
   irSensorState = irSensor.readSensors();
 
-  if (distFront < 10){
+  if (irSensorState != 3){
     roverStop();
-    evalRight();
-    evalLeft();
-    servoFront();
-    if (distRight > distLeft){
-      turnRight();
-    }
-    else if (distLeft > distRight){
-      turnLeft();
-    }
   }
   else{
-    forward();
+    if (distFront < 10){
+      roverStop();
+      evalRight();
+      evalLeft();
+      servoFront();
+      if (distRight > distLeft){
+        turnRight();
+      }
+      else if (distLeft > distRight){
+        turnLeft();
+      }
+    }
+    else{
+      forward();
+    }
   }
+  
   Serial.print("Front: ");
   Serial.print(distFront);
   Serial.print("Right: ");
