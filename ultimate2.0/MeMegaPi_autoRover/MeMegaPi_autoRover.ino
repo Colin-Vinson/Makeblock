@@ -17,6 +17,8 @@
  * MeBuzzer.h library to control the onboard buzzer
  */
 
+//catch: avstand are outside of operating paramenters for ultrasonic sensor? 
+
 #include <MeMegaPi.h>
 
 MeUltrasonicSensor ultrasonic(7); //ultra sonic sensor connected to RJ25 port 8
@@ -76,6 +78,7 @@ void loop(){
   Serial.println(irSensorState);
 }
 
+//function to drive rover forward
 void forward(){
   motorR.run(-motorSpeed);
   motorL.run(motorSpeed);
