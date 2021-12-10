@@ -15,19 +15,30 @@
  * MeUltrasonicSensor.h to control the ultrasonic sensor module
  * MeRGBLed.h to control the two onboard WS2812 RGB Leds
  * MeBuzzer.h library to control the onboard buzzer
+ * 
+ * by
+ * date
+ * 
  */
+ 
 
 //catch: avstand are outside of operating paramenters for ultrasonic sensor? 
 
-#include <MeMegaPi.h>
+// include nessesary libraries:
+#include <MeMegaPi.h> 
 
+// create objects and variables for sensor and motor control
+//objects give us access to the functions we need to control the sensors and motors 
 MeUltrasonicSensor ultrasonic(7); //ultra sonic sensor connected to RJ25 port 8
-float distFront;
+
+//
+float distFront;  //float data type....
 float distRight;
 float distLeft;
 
+//
 MeLineFollower irSensor(PORT_5);
-int irSensorState;
+int irSensorState; //
 
 Servo meServo; //create servo object to control a servo with the functions provided by the library
 int servoDelay = 400;
@@ -37,17 +48,21 @@ MeMegaPiDCMotor motorL(PORT2B); //left motor
 int motorSpeed = 255; //PWM value 0 - 255 (0 - 100% motor speed)
 int turnDelay = 850;  //millisecond delay to turn rover 90 degrees
 
+//
 void setup(){
-  Serial.begin(9600);
+  Serial.begin(9600); //
 
   meServo.attach(63); //port 6 slot 2 (A9 = D63 on Arduino Mega)
 }
 
+//
 void loop(){
+  //
   distFront = ultrasonic.distanceCm();
   irSensorState = irSensor.readSensors();
 
-  if (irSensorState != 3){
+  //
+  if (irSensorState != 3){  //
     roverStop();
   }
   else{
@@ -68,6 +83,7 @@ void loop(){
     }
   }
   
+  //
   Serial.print("Front: ");
   Serial.print(distFront);
   Serial.print("Right: ");
@@ -79,8 +95,9 @@ void loop(){
 }
 
 //function to drive rover forward
+//void function are...
 void forward(){
-  motorR.run(-motorSpeed);
+  motorR.run(-motorSpeed); //run function (neg (-) because...)
   motorL.run(motorSpeed);
 }
 
